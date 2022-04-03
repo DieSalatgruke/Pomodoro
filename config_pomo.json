@@ -1,0 +1,11 @@
+{
+  "timer_config": 60,
+  "aktiv": 0.1,
+  "break": 0.05,
+  "big_break": 0.02,
+  "intervall": [
+    2,
+    5,
+    8
+  ]
+}
