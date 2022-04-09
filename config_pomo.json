@@ -1,8 +1,8 @@
 {
   "timer_config": 60,
-  "aktiv": 0.1,
-  "break": 0.05,
-  "big_break": 0.02,
+  "aktiv": 25,
+  "break": 5,
+  "big_break": 15,
   "intervall": [
     2,
     5,

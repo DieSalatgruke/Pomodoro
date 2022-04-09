@@ -11,10 +11,7 @@ def get_timer_config():
         return config_data
 
 
-def request():
-    inp = str(input(f"Intervall easy = ({get_timer_config()['intervall'][0]}), "
-                    f"normal = ({get_timer_config()['intervall'][1]}), hard = ({get_timer_config()['intervall'][2]})?: "))
-
+def request(inp):
     if inp == 'easy':
         return get_timer_config()['intervall'][0]
     elif inp == 'normal':
@@ -37,6 +34,45 @@ def countdown(num_of_secs):
         time.sleep(1)
 
 
+def timer_to_pomodoro(interval_intensity):
+    while interval_intensity != 1:
+        make_it_beauty()
+        print('Aktivezeit')
+        make_it_beauty()
+        countdown(_aktiv())
+
+        make_it_beauty()
+        print('Pause')
+        make_it_beauty()
+        countdown(_break())
+
+        interval_intensity -= 1
+
+        if interval_intensity == 3 or interval_intensity == 6:
+            make_it_beauty()
+            print('Aktivezeit, gleich kommt die große Pause!')
+            make_it_beauty()
+            countdown(_aktiv())
+
+            make_it_beauty()
+            print('Große Pause')
+            make_it_beauty()
+            countdown(_big_break())
+
+            interval_intensity -= 1
+
+        elif interval_intensity == 1:
+            make_it_beauty()
+            print('Letzte Aktivezeit')
+            make_it_beauty()
+            countdown(_aktiv())
+            finished()
+
+
+def make_it_beauty():
+    print('-' * 15)
+
+
 def _aktiv():
     return int(get_timer_config()['aktiv'] * get_timer_config()['timer_config'])
 
@@ -50,73 +86,20 @@ def _big_break():
 
 
 def finished():
-    print('Du hast es geschafft. Hurra!')
+    print('Hurra! Du hast es geschafft.')
 
 
 if __name__ == '__main__':
-    if request() == get_timer_config()['intervall'][0]:
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        finished()
-    elif request() == get_timer_config()['intervall'][1]:
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Große Pause')
-        countdown(_big_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        finished()
-    elif request() == get_timer_config()['intervall'][2]:
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Große Pause')
-        countdown(_big_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Große Pause')
-        countdown(_big_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        print('Pause')
-        countdown(_break())
-        print('Aktivezeit')
-        countdown(_aktiv())
-        finished()
+    i = 1
+    while i == 1:
+        inp = str(input(f"Intervall easy = ({get_timer_config()['intervall'][0]}), "
+                        f"normal = ({get_timer_config()['intervall'][1]}), "
+                        f"hard = ({get_timer_config()['intervall'][2]})?: "))
+
+        inpt = request(inp)
+        if inpt is False:
+            i = 1
+        else:
+            timer_to_pomodoro(inpt)
+            i = 2
+
