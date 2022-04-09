@@ -48,7 +48,7 @@ def timer_to_pomodoro(interval_intensity):
 
         interval_intensity -= 1
 
-        if interval_intensity == 3 or interval_intensity == 6:
+        if interval_intensity == 3 or interval_intensity == 6 or interval_intensity == 9 or interval_intensity == 12:
             make_it_beauty()
             print('Aktivezeit, gleich kommt die große Pause!')
             make_it_beauty()
