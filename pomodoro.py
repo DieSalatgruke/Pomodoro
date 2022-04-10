@@ -1,9 +1,28 @@
 import time
 import json
 import sys
-import tkinter
+import tkinter as tk
 
 CONFIG_DATA = 'config_pomo.json'
+
+
+class Clock:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.label = tk.Label(text='',
+                   font=('Arial', 45),
+                   fg='green',
+                   bg='black',
+                   width=20,
+                   height=4)
+        self.label.pack()
+        self.update_clock()
+        self.root.mainloop()
+
+    def update_clock(self):
+        now = time.strftime("%H:%M:%S")
+        self.label.configure(text=now)
+        self.root.after(1000, self.update_clock)
 
 
 def get_timer_config():
@@ -36,7 +55,7 @@ def countdown(num_of_secs):
 
 
 def timer_to_pomodoro(interval_intensity):
-    while interval_intensity != 1:
+    while interval_intensity > 1:
         make_it_beauty()
         print('Aktivezeit')
         make_it_beauty()
