@@ -1,6 +1,7 @@
 import time
 import json
 import sys
+import tkinter
 
 CONFIG_DATA = 'config_pomo.json'
 
