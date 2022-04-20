@@ -17,12 +17,10 @@ class Clock:
                    width=20,
                    height=4)
         self.label.pack()
-        self.update_clock()
         self.root.mainloop()
 
-    def update_clock(self):
-        now = time.strftime("%H:%M:%S")
-        self.label.configure(text=now)
+    def update_clock(self, pomotime):
+        self.label.configure(text=pomotime)
         self.root.after(1000, self.update_clock)
 
 
