@@ -1,27 +1,42 @@
 import time
 import json
 import sys
-import tkinter as tk
-import winsound
+from win10toast import ToastNotifier
 
 CONFIG_DATA = 'config_pomo.json'
 
+big_break = 'Große Pause'
+aktive = 'Aktivezeit'
+last_aktiv = 'Letzte Runde'
+time_break = 'Pause'
 
-class Clock:
-    def __init__(self):
-        self.root = tk.Tk()
-        self.label = tk.Label(text='',
-                   font=('Arial', 45),
-                   fg='green',
-                   bg='black',
-                   width=20,
-                   height=4)
-        self.label.pack()
-        self.root.mainloop()
 
-    def update_clock(self, pomotime):
-        self.label.configure(text=pomotime)
-        self.root.after(1000, self.update_clock)
+def notification(what_is):
+    toast = ToastNotifier()
+    toast.show_toast(
+        f'{what_is}',
+        f' ',
+        threaded=True
+    )
+
+
+def func_pomo():
+    b_list = create_list_big_break(inpt)
+    for t in range(inpt):
+        if t in b_list:
+            notification(aktive)
+            timer_for_aktiv(aktive)
+            notification(big_break)
+            timer_for_big_break(big_break)
+        elif t == inpt - 1:
+            notification(last_aktiv)
+            timer_for_aktiv(aktive)
+            finished()
+        else:
+            notification(aktive)
+            timer_for_aktiv(aktive)
+            notification(time_break)
+            timer_for_break(time_break)
 
 
 def get_timer_config():
@@ -63,26 +78,23 @@ def calculate_big_break(_interval):
         return _big_breaks
 
 
-def timer_for_big_break():
-    sound()
+def timer_for_big_break(bb):
     make_it_beauty()
-    print('Große Pause')
+    print(f'{bb}')
     make_it_beauty()
     countdown(_big_break())
 
 
-def timer_for_break():
-    sound()
+def timer_for_break(b):
     make_it_beauty()
-    print('Pause')
+    print(f'{b}')
     make_it_beauty()
     countdown(_break())
 
 
-def timer_for_aktiv():
-    sound()
+def timer_for_aktiv(a):
     make_it_beauty()
-    print('Aktivezeit')
+    print(f'{a}')
     make_it_beauty()
     countdown(_aktiv())
 
@@ -94,10 +106,6 @@ def create_list_big_break(interval_intensity):
         start_break = start_break + 3
         break_list.append(start_break)
     return break_list
-
-
-def sound():
-    winsound.PlaySound('*', winsound.SND_ALIAS)
 
 
 def make_it_beauty():
@@ -132,15 +140,5 @@ if __name__ == '__main__':
         if inpt is False:
             i = 1
         else:
-            b_list = create_list_big_break(inpt)
-            for t in range(inpt):
-                if t in b_list:
-                    timer_for_aktiv()
-                    timer_for_big_break()
-                elif t == inpt-1:
-                    timer_for_aktiv()
-                    finished()
-                else:
-                    timer_for_aktiv()
-                    timer_for_break()
+            func_pomo()
         i = 2
