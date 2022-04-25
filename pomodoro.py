@@ -141,4 +141,4 @@ if __name__ == '__main__':
             i = 1
         else:
             func_pomo()
-        i = 2
+            i = 2
